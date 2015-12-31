@@ -1,13 +1,14 @@
 require 'spec_helper_acceptance'
 
-describe 'consul class' do
+describe 'yuicompressor class' do
 
   context 'default parameters' do
     # Using puppet_apply as a helper
     it 'should work with no errors based on the example' do
       pp = <<-EOS
+
         package { 'java-1.8.0-openjdk':
-        ensure => 'installed',
+          ensure => 'installed',
         } ->
 
         class { 'yuicompressor':
@@ -19,9 +20,11 @@ describe 'consul class' do
       expect(apply_manifest(pp).exit_code).to eq(0)
     end
 
-    describe command('/usr/local/bin/yui --version') do
-      it { should return_stdout /2\.4\.8/ }
-    end
+    it 'yui --version should give us the default version (2.4.8)' do
+       shell("/usr/local/bin/yui --version") do |r|
+         expect(r.stderr).to match(/2\.4\.8/)
+       end
+     end
 
   end
 end
