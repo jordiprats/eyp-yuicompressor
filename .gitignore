@@ -3,3 +3,4 @@ pkg/
 .vagrant
 junit
 log
+spec/fixtures/
